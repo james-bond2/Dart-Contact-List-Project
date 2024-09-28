@@ -2,14 +2,28 @@ import 'contact.dart';
 
 class ContactBook{
   List <Contact> contacts = [];
-  addContact({required name, required address, required email, required phoneNumber}){
-    contacts.add(Contact(name: name, address: address, email: email, phoneNumber: phoneNumber));
+
+  addContact(Contact contact){
+    contacts.add(contact);
   }
-  removeContact({required name, required address, required email, required phoneNumber}){
-    contacts.remove(Contact(name: name, address: address, email: email, phoneNumber: phoneNumber));
+  removeContact(String name){
+    contacts.removeWhere((contact)=> contact.name == name);
   }
-  displayContacts(){
-    print(contacts[0]);
+  List <Contact> searchContactByName(String name){
+    return contacts.where((contact)=>contact.name.toLowerCase().contains(name.toLowerCase())).toList();
+  }
+  List<Contact> searchContactByPhoneNumber(String phoneNumber) {
+    return contacts.where((contact) => contact.phoneNumber == phoneNumber).toList();
+  }
+  void displayContactList(){
+    if(contacts.isEmpty){
+      print('Contact list is empty.');
+    } else{
+      print('Contact list:');
+      for(Contact contact in contacts){
+        contact.displayContactInfo();
+      }
+    }
   }
 
 }
